@@ -6,7 +6,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser, signInWithGoogle } = useContext(AuthContext);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -30,6 +30,17 @@ const Login = () => {
       .catch((error) => {
         console.log(error.message);
         setError(error.message);
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        const logInUser = result.user;
+        console.log(logInUser);
+      })
+      .catch((error) => {
+        console.log(error.message);
       });
   };
 
@@ -87,6 +98,17 @@ const Login = () => {
               <button className="btn btn-primary">Login</button>
             </div>
           </form>
+          <p className="text-center pb-2">
+            <small>
+              Sign in with
+              <button
+                onClick={handleGoogleSignIn}
+                className="btn btn-primary ml-2"
+              >
+                Google
+              </button>
+            </small>
+          </p>
         </div>
       </div>
     </div>
